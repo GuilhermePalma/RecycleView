@@ -10,11 +10,11 @@
     <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/guilhermePalma/RecyclerView?color=2304D361">
   </a>
 	
-  <a href="https://github.com/GuilhermeCallegari/Maquiagem">
+  <a href="https://github.com/guilhermePalma/RecyclerView">
     <img alt="Repository size" src="https://img.shields.io/github/repo-size/guilhermePalma/RecyclerView">
   </a>
 	
-  <a href="https://github.com/GuilhermeCallegari/Maquiagem/commits/main">
+  <a href="https://github.com/guilhermePalma/RecyclerView/commits/main">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/guilhermePalma/RecyclerView">
   </a>
 	
@@ -102,7 +102,7 @@ O Projeto utilizou a API Makeup. Para ver sua documentação, acesse [API Makeup
 
 Este projeto é divido em seis principais partes:
 <!-- Dividir os arquivos view/model(Classes do Sistema)/activities -->
-1. [Configurações das Telas e Funções do Sistema](pp/src/main/java/com/example/recyclerview)
+1. [Configurações das Telas e Funções do Sistema](app/src/main/java/com/example/recyclerview)
 2. [Layout das Telas](app/src/main/res/layout)
 
 
