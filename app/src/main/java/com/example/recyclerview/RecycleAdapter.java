@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,10 @@ import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleViewHolder> {
 
-    //Interface, context e list
-    public static ClickRecycleView clickRecycleView;
+    //Context e List usando a Classe "People" e Interface
     Context context;
-    private List<People> peopleList;
+    private final List<People> peopleList;
+    public static ClickRecycleView clickRecycleView;
 
     //Contrutor
     public RecycleAdapter(Context context, List<People> list, ClickRecycleView clickRecycleView) {
@@ -25,52 +26,82 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
         this.clickRecycleView = clickRecycleView;
     }
 
-    //Classe Protegida que retorna os campos usados e a Interface
+    //Cria o ViewHolder. Instancia e Infla com o Layout a ser usado
+    @NonNull
+    @Override
+    public RecycleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+
+        if (context != null){
+            View itemView;
+
+            itemView = LayoutInflater.from(context).inflate
+                    (R.layout.design_recycler_view, viewGroup, false);
+
+            return new RecycleViewHolder(itemView);
+        }
+
+        return null;
+    }
+
+    //Pega os Valores da List
+    @Override
+    public void onBindViewHolder(@NonNull RecycleViewHolder holder, int position) {
+
+        if (context != null) {
+            People people = peopleList.get(position);
+            holder.txtName.setText(people.getNome());
+            holder.txtIdade.setText(String.valueOf(people.getAge()));
+            // Clique do Usuario no Item
+            holder.itemView.setOnClickListener(v ->
+                    clickRecycleView.onCustomClick(position)
+            );
+
+            // Clique no Button de Excluir
+            holder.delete.setOnClickListener(v ->
+                    clickRecycleView.deletePeople(position)
+            );
+
+            // Clique no Button de Aumentar Idade
+            holder.more_age.setOnClickListener(v ->
+                    clickRecycleView.addAge(position)
+            );
+
+            // Clique no Button de Ver Mais
+            holder.show_more.setOnClickListener( v ->
+                    clickRecycleView.showMore(position)
+            );
+        }
+
+    }
+
+    //Conta os Itens da Lista ---> Essencial p/ não criar uma Lista null
+    @Override
+    public int getItemCount() {
+        if (peopleList != null){
+            return peopleList.size();
+        } else {
+            return 0;
+        }
+    }
+
+    // Classe Protegida que retorna os campos usados e a Interface
     protected class RecycleViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView txtName;
         protected TextView txtIdade;
 
+        protected Button delete;
+        protected Button more_age;
+        protected Button show_more;
+
         public RecycleViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txt_nome);
             txtIdade = itemView.findViewById(R.id.txt_idade);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickRecycleView.onCustomClick(peopleList.get(getLayoutPosition()));
-                }
-            });
+            delete = itemView.findViewById(R.id.btn_delete);
+            more_age = itemView.findViewById(R.id.btn_addAge);
+            show_more = itemView.findViewById(R.id.btn_more);
         }
     }
 
-    //Cria o ViewHolder; Instancia com o valor do Layout usado
-    @NonNull
-    @Override
-    public RecycleAdapter.RecycleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View itemView;
-        itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.texts, viewGroup, false);
-        return new RecycleAdapter.RecycleViewHolder(itemView);
-    }
-
-    //Pega os Valores da List
-    @Override
-    public void onBindViewHolder(@NonNull RecycleAdapter.RecycleViewHolder holder, int position) {
-        People people = peopleList.get(position);
-        holder.txtName.setText(people.getNome());
-        holder.txtIdade.setText(Integer.toString(people.getAge()));
-    }
-
-    //Conta os Itens da Lista
-    @Override
-    public int getItemCount() {
-        return peopleList.size();
-    }
-
 }
-
-
-
-
