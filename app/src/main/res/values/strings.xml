@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">RecyclerView</string>
     <string name="desctiption_floatbtn">Adicinar mais 1 Texto</string>
+
+    <string name="title_main">Recycler View</string>
+    <string name="title_result">Dados do Item</string>
 </resources>
