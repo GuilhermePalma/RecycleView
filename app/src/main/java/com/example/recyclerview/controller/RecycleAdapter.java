@@ -1,4 +1,4 @@
-package com.example.recyclerview;
+package com.example.recyclerview.controller;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recyclerview.R;
+import com.example.recyclerview.model.ClickRecycleView;
+import com.example.recyclerview.model.People;
+
 import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleViewHolder> {
@@ -17,7 +21,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
     //Context e List usando a Classe "People" e Interface
     Context context;
     private final List<People> peopleList;
-    public static ClickRecycleView clickRecycleView;
+    public ClickRecycleView clickRecycleView;
 
     //Contrutor
     public RecycleAdapter(Context context, List<People> list, ClickRecycleView clickRecycleView) {
@@ -31,16 +35,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
     @Override
     public RecycleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
-        if (context != null){
-            View itemView;
+        View itemView;
 
-            itemView = LayoutInflater.from(context).inflate
-                    (R.layout.design_recycler_view, viewGroup, false);
+        itemView = LayoutInflater.from(context).inflate
+                (R.layout.design_recycler_view, viewGroup, false);
 
-            return new RecycleViewHolder(itemView);
-        }
+        return new RecycleViewHolder(itemView);
 
-        return null;
     }
 
     //Pega os Valores da List
@@ -49,7 +50,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 
         if (context != null) {
             People people = peopleList.get(position);
-            holder.txtName.setText(people.getNome());
+            holder.txtName.setText(people.getName());
             holder.txtIdade.setText(String.valueOf(people.getAge()));
             // Clique do Usuario no Item
             holder.itemView.setOnClickListener(v ->

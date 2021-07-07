@@ -1,4 +1,4 @@
-package com.example.recyclerview;
+package com.example.recyclerview.model;
 
 public interface ClickRecycleView {
     void onCustomClick(int position);
@@ -8,5 +8,4 @@ public interface ClickRecycleView {
     void addAge(int position);
 
     void showMore(Object object, int position);
-
 }
