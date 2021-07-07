@@ -68,7 +68,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 
             // Clique no Button de Ver Mais
             holder.show_more.setOnClickListener( v ->
-                    clickRecycleView.showMore(position)
+                    clickRecycleView.showMore(peopleList.get(position), position)
             );
         }
 

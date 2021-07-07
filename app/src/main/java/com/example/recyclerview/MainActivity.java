@@ -1,5 +1,6 @@
 package com.example.recyclerview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -17,8 +18,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements ClickRecycleView {
 
     private RecyclerView recyclerView;
-    RecycleAdapter adapter;
-    private final List<People> peopleList = new ArrayList<>();
+    private RecycleAdapter adapter;
+    public ArrayList<People> peopleList = new ArrayList<>();
     private FloatingActionButton floatingActionButton;
 
     Random randomPosition = new Random();
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
 
     public void setUpRecyclerView(){
         //Instancia o RecyclerView e Configura
-        recyclerView =  findViewById(R.id.recycler_main);
+        recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Intancia o Adapter do Recycler View
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         String name = peopleList.get(position).getNome();
         int age = peopleList.get(position).getAge();
 
-        Toast.makeText(this, "Nome do Usuario: " + name + "\nIdade:" + age,
+        Toast.makeText(this, "Nome do Usuario: " + name + "\nIdade: " + age,
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -92,20 +93,24 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
     }
 
     @Override
-    public void showMore(Object object)  {
-       /* People people = (People) object;
+    public void showMore(Object object, int position)  {
+        // Outra forma de recuperar a Classe do Item Clicado
+        People people = (People) object;
         String name = people.getNome();
         int age = people.getAge();
+
+        // Pega a Posição do Array e soma +1 p/ representar o item na Lista
+        position ++;
 
         Bundle dataPeople = new Bundle();
         dataPeople.putString("name", name);
         dataPeople.putInt("age", age);
+        dataPeople.putInt("position", position);
 
         //Aqui é possivel enviar dados para outra activity
         Intent activityResult = new Intent(this, WindowResults.class);
         activityResult.putExtras(dataPeople);
-        startActivity(activityResult);*/
-        System.out.println("Area ainda em Desenvolvimento...\n Layout não concluido");
+        startActivity(activityResult);
     }
 
 }

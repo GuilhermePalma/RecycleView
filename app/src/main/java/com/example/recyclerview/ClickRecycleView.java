@@ -7,6 +7,6 @@ public interface ClickRecycleView {
 
     void addAge(int position);
 
-    void showMore(Object object);
+    void showMore(Object object, int position);
 
 }
