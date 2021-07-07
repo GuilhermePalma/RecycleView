@@ -2,6 +2,18 @@
     <string name="app_name">RecyclerView</string>
     <string name="desctiption_floatbtn">Adicinar mais 1 Texto</string>
 
+    <!-- Strings Activity Main -->
     <string name="title_main">Recycler View</string>
     <string name="title_result">Dados do Item</string>
+
+    <!-- Strings Design Recycler View -->
+    <string name="label_name">Nome</string>
+    <string name="label_age">Idade</string>
+
+    <!-- Strings Activity Result -->
+    <string name="label_nameFormatted">Nome: %s</string>
+    <string name="label_ageFormatted">Idade: %d</string>
+    <string name="label_itemFormatted">Item n°: %d</string>
+    <string name="button_delete">Apagar Item</string>
+    <string name="button_return">Inicio</string>
 </resources>
