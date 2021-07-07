@@ -11,6 +11,7 @@
     <string name="label_age">Idade</string>
 
     <!-- Strings Activity Result -->
+    <string name="label_idFormatted">ID: %d</string>
     <string name="label_nameFormatted">Nome: %s</string>
     <string name="label_ageFormatted">Idade: %d</string>
     <string name="label_itemFormatted">Item n°: %d</string>
