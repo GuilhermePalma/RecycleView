@@ -50,6 +50,12 @@ public class WindowResults extends AppCompatActivity {
         formattedTexts();
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        intentHome();
+    }
+
     // Formata os Textos
     private void formattedTexts() {
         // Substitui os Caracteres pelas Variaveis
@@ -63,14 +69,21 @@ public class WindowResults extends AppCompatActivity {
     public void listenersButtons() {
         return_home.setOnClickListener(v -> {
             finish();
-            startActivity(new Intent(this, MainActivity.class));
+            // Desativa a Transição e Inicia a Atividade
+            intentHome();
         });
 
          delete.setOnClickListener(v -> {
              database.deletePeople(int_id);
+             database.close();
              finish();
-             startActivity(new Intent(this, MainActivity.class));
+             intentHome();
          });
+    }
+
+    public void intentHome(){
+        overridePendingTransition(0, 0);
+        startActivity(new Intent(this, MainActivity.class));
     }
 
 }

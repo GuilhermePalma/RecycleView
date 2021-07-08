@@ -6,8 +6,11 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 import com.example.recyclerview.model.People;
+
+import java.sql.SQLData;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -50,6 +53,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             next_id = cursor.getInt(0);
+            cursor.close();
+
             return next_id + 1;
         }
 
@@ -88,4 +93,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         database.delete(TABLE_PEOPLE, ID + "=" + id, null);
     }
+
+    public void updatePeople(People people){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(ID, people.getId());
+        values.put(NAME, people.getName());
+        values.put(AGE, people.getAge());
+
+        database.update(TABLE_PEOPLE,values, ID + "=" + people.getId(),null);
+    }
+
 }

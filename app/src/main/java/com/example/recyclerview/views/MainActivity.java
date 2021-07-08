@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         listenerFloatingButton();
     }
 
-
     // Configura o RecyclerView
     public void setUpRecyclerView(){
         //Instancia o RecyclerView e Configura
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         if (peopleList.size() > database.amountPeoples()){
             // Limpa a List e Recupera os Dados do Banco de Dados
             peopleList.clear();
+            database.close();
             recoveryPeoples();
         }
     }
@@ -143,9 +143,11 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         int agePeople = peopleList.get(position).getAge() + 1;
         String namePeople = peopleList.get(position).getName();
 
-        People people = new People(idPeople, namePeople,agePeople);
+        People people_age = new People(idPeople,namePeople,agePeople);
 
-        peopleList.set(position, people);
+        database.updatePeople(people_age);
+
+        peopleList.set(position, people_age);
         adapter.notifyDataSetChanged();
     }
 
