@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
 
             } while (cursor.moveToNext());
         }
+
+        database.close();
     }
 
     // Listener de Clique no Floating Button
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
 
             // Insere a Pessoa no Banco de Dados
             database.insertPeople(peopleInstance);
+            database.close();
 
             //Adiciona uma Pessoa ao Array
             peopleList.add(peopleInstance);
@@ -146,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         People people_age = new People(idPeople,namePeople,agePeople);
 
         database.updatePeople(people_age);
+        database.close();
 
         peopleList.set(position, people_age);
         adapter.notifyDataSetChanged();
@@ -156,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
     public void deletePeople(int position) {
         int id = peopleList.get(position).getId();
         database.deletePeople(id);
+        database.close();
 
         hasDeleteItem();
 
