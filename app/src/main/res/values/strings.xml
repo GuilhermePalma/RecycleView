@@ -1,9 +1,23 @@
 <resources>
     <string name="app_name">RecyclerView</string>
-    <string name="desctiption_floatbtn">Adicinar mais 1 Texto</string>
+    <string name="description_floatButton">Adicinar mais 1 Texto</string>
 
     <!-- Strings Activity Main -->
     <string name="title_main">Recycler View</string>
+    <string name="label_topic1"><b>1.</b> Nesse Aplicativo Há 2 Opções para Iniciar a Lista Dinamica:</string>
+    <string name="label_topic1_1"><b>1.1 -</b> Clicar no Botão com o "+" e Adicionar Nomes e
+        Idades Aleatorias</string>
+    <string name="label_topic1_2"><b>1.2 -</b> Clicar no Icone "v" e Inserir os Dados para Adicionar
+        na Lista Dinamica</string>
+    <string name="label_topic2"><b>2.</b> Os Icones nos Itens da Lista permitem: Deletar Pessoa,
+        Somar 1 Ano na Idade e Ver mais Detalhes</string>
+    <string name="label_topic3"><b>3.</b> Esse Aplicativo Foi desenvolvido para o Estudo do
+        RecyclerView</string>
+
+    <string name="button_recycler">Começar</string>
+    
+    <!-- Strings Activity Recycler -->
+    <string name="title_recycler">Lista Dinamica</string>
     <string name="title_result">Dados do Item</string>
 
     <!-- Strings Design Recycler View -->
