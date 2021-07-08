@@ -67,16 +67,14 @@ public class WindowResults extends AppCompatActivity {
 
     // Listeners dos Botões
     public void listenersButtons() {
-        return_home.setOnClickListener(v -> {
-            finish();
+        return_home.setOnClickListener(v ->
             // Desativa a Transição e Inicia a Atividade
-            intentHome();
-        });
+            intentHome()
+        );
 
          delete.setOnClickListener(v -> {
              database.deletePeople(int_id);
              database.close();
-             finish();
              intentHome();
          });
     }
@@ -84,6 +82,7 @@ public class WindowResults extends AppCompatActivity {
     public void intentHome(){
         overridePendingTransition(0, 0);
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
 }
