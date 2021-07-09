@@ -5,24 +5,28 @@
     <!-- Strings Activity Main -->
     <string name="title_main">Recycler View</string>
     <string name="label_topic1"><b>1.</b> Nesse Aplicativo Há 2 Opções para Iniciar a Lista Dinamica:</string>
-    <string name="label_topic1_1"><b>1.1 -</b> Clicar no Botão com o "+" e Adicionar Nomes e
+    <string name="label_topic1_1"><b>1.1 -</b> Clicar no Botão com o \"+\" e Adicionar Nomes e
         Idades Aleatorias</string>
-    <string name="label_topic1_2"><b>1.2 -</b> Clicar no Icone "v" e Inserir os Dados para Adicionar
+    <string name="label_topic1_2"><b>1.2 -</b> Clicar no Icone \"v\" e Inserir os Dados para Adicionar
         na Lista Dinamica</string>
     <string name="label_topic2"><b>2.</b> Os Icones nos Itens da Lista permitem: Deletar Pessoa,
         Somar 1 Ano na Idade e Ver mais Detalhes</string>
     <string name="label_topic3"><b>3.</b> Esse Aplicativo Foi desenvolvido para o Estudo do
         RecyclerView</string>
-
     <string name="button_recycler">Começar</string>
-    
+
     <!-- Strings Activity Recycler -->
-    <string name="title_recycler">Lista Dinamica</string>
+    <string name="title_recycler">Lista Dinâmica</string>
     <string name="title_result">Dados do Item</string>
+    <string name="title_dialog">Ajuda</string>
+    <string name="message_dialog">Clique no Botão \"+\" <b>ou</b>\nClique no Icone \"v\"
+        e Insira o Nome e Idade</string>
+    <string name="no_find_fragment">Houve um Erro Inesperado…</string>
+    <string name="description_help">Ver Ajuda</string>
+    <string name="description_fragment">Visualizar ou Fechar o Cadastro de Usuarios</string>
 
     <!-- Strings Design Recycler View -->
-    <string name="label_name">Nome</string>
-    <string name="label_age">Idade</string>
+    <string name="label_data">%s, %d Anos</string>
 
     <!-- Strings Activity Result -->
     <string name="label_idFormatted">ID: %d</string>
@@ -31,4 +35,13 @@
     <string name="label_itemFormatted">Item n°: %d</string>
     <string name="button_delete">Apagar Item</string>
     <string name="button_return">Inicio</string>
+
+    <!-- Strings Fragment -->
+    <string name="button_fragment">Cadastrar</string>
+    <string name="title_fragment">Cadastro de Usuario</string>
+    <string name="label_name">Nome</string>
+    <string name="label_age">Idade</string>
+    <string name="error_input">Campo %s não Preenchido</string>
+    <string name="error_database">Houve um Problema no Nosso Banco de Dados…</string>
+
 </resources>
