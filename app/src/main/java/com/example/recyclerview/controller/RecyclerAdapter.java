@@ -16,7 +16,7 @@ import com.example.recyclerview.model.People;
 
 import java.util.List;
 
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolder> {
 
     //Context e List usando a Classe "People" e Interface
     Context context;
@@ -24,7 +24,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
     public ClickRecycleView clickRecycleView;
 
     //Contrutor
-    public RecycleAdapter(Context context, List<People> list, ClickRecycleView clickRecycleView) {
+    public RecyclerAdapter(Context context, List<People> list, ClickRecycleView clickRecycleView) {
         this.context = context;
         this.peopleList = list;
         this.clickRecycleView = clickRecycleView;
@@ -50,8 +50,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 
         if (context != null) {
             People people = peopleList.get(position);
-            holder.txtName.setText(people.getName());
-            holder.txtIdade.setText(String.valueOf(people.getAge()));
+
+            // Pega o Context, usando a View do Holder ---> P/ acessar as Strings
+            String dataFormatted = holder.itemView.getContext().getString(R.string.label_data,
+                    String.format("%s", people.getName()),
+                    people.getAge());
+
+            holder.txtData.setText(dataFormatted);
             // Clique do Usuario no Item
             holder.itemView.setOnClickListener(v ->
                     clickRecycleView.onCustomClick(position)
@@ -88,8 +93,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
     // Classe Protegida que retorna os campos usados e a Interface
     protected class RecycleViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView txtName;
-        protected TextView txtIdade;
+        protected TextView txtData;
 
         protected Button delete;
         protected Button more_age;
@@ -97,8 +101,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 
         public RecycleViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txt_nome);
-            txtIdade = itemView.findViewById(R.id.txt_idade);
+            txtData = itemView.findViewById(R.id.txt_data);
             delete = itemView.findViewById(R.id.btn_delete);
             more_age = itemView.findViewById(R.id.btn_addAge);
             show_more = itemView.findViewById(R.id.btn_more);
