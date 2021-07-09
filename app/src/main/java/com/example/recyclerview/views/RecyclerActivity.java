@@ -1,39 +1,48 @@
 package com.example.recyclerview.views;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.DataBaseHelper;
-import com.example.recyclerview.controller.RecycleAdapter;
+import com.example.recyclerview.controller.RecyclerAdapter;
 import com.example.recyclerview.model.ClickRecycleView;
 import com.example.recyclerview.model.People;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class RecyclerActivity extends AppCompatActivity implements ClickRecycleView {
 
-    private RecyclerView recyclerView;
-    private RecycleAdapter adapter;
+    private RecyclerAdapter adapter;
     public ArrayList<People> peopleList = new ArrayList<>();
+
+    private ImageButton help;
+    private ImageButton btn_fragment;
     private FloatingActionButton floatingActionButton;
-
-    Random randomPosition = new Random();
-    private static final String[] names = {"Alan", "Arthur", "Nicolas", "Angela", "Brenda", "Liz"};
-    private static final int[] ages = {32, 54, 65, 84, 41, 6, 15, 22};
-
+    private FrameLayout fragment;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
     private final DataBaseHelper database = new DataBaseHelper(this);
+    private NewUserFragment userFragment;
     private int nextId_db;
+    private boolean isOpenFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,40 +50,34 @@ public class RecyclerActivity extends AppCompatActivity implements ClickRecycleV
         setContentView(R.layout.activity_recycler);
 
         floatingActionButton = findViewById(R.id.floatingButton);
+        help = findViewById(R.id.btn_help);
+        btn_fragment = findViewById(R.id.btn_fragment);
+        fragment = findViewById(R.id.fragment_newUser);
 
+        fragmentManager = getSupportFragmentManager();
+
+        // Configura o RecyclerView
         setUpRecyclerView();
 
-        hasDeleteItem();
+        // Carrega as pessoas do Banco de Dados
         recoveryPeoples();
 
+        // Listeners dos Botões
         listenerFloatingButton();
+        listenerHelp();
+        listenerFragment();
+
     }
-
-
 
     // Configura o RecyclerView
     public void setUpRecyclerView(){
         //Instancia o RecyclerView e Configura
-        recyclerView = findViewById(R.id.recycler_main);
+        RecyclerView recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Intancia o Adapter do Recycler View
-        adapter = new RecycleAdapter(this, peopleList, this);
+        adapter = new RecyclerAdapter(this, peopleList, this);
         recyclerView.setAdapter(adapter);
-
-        // Cria um divisor entre os Itens
-        recyclerView.addItemDecoration(new DividerItemDecoration(
-                this, DividerItemDecoration.VERTICAL));
-    }
-
-    // Verifica se a Lista e o Banco de Dados tem os mesmos Tamanhos/Dados
-    private void hasDeleteItem(){
-        if (peopleList.size() > database.amountPeoples()){
-            // Limpa a List e Recupera os Dados do Banco de Dados
-            peopleList.clear();
-            database.close();
-            recoveryPeoples();
-        }
     }
 
     // Recupera as Pessoas já criadas e salvas no BD
@@ -82,6 +85,9 @@ public class RecyclerActivity extends AppCompatActivity implements ClickRecycleV
         int id, age;
         String name;
         Cursor cursor = database.selectAllPeoples();
+
+        // Reinicia o RecyclerView
+        peopleList.clear();
 
         if (cursor.moveToFirst()){
             // Recupera os Dados enquanto tiver uma Proxima Posição
@@ -92,18 +98,30 @@ public class RecyclerActivity extends AppCompatActivity implements ClickRecycleV
 
                 // Instancia a Classe
                 People peopleDataBase = new People(id,name,age);
-
-                // Insere no Array caso não esteja no Array
-                if (!peopleList.contains(peopleDataBase)){
-                    peopleList.add(peopleDataBase);
-                    // Notifica o Recycler Adpater que houve alterações
-                    adapter.notifyDataSetChanged();
-                }
+                // Adiciona no Array do RecylcerView
+                peopleList.add(peopleDataBase);
 
             } while (cursor.moveToNext());
         }
 
+        adapter.notifyDataSetChanged();
         database.close();
+    }
+
+    // Listener do Button Help
+    private void listenerHelp() {
+        help.setOnClickListener( v -> {
+
+            AlertDialog alert_help = new AlertDialog.Builder(this).create();
+
+            alert_help.setTitle(getString(R.string.title_dialog));
+            alert_help.setMessage(getString(R.string.message_dialog));
+
+            alert_help.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                    (dialog, which) -> alert_help.dismiss());
+            alert_help.show();
+
+        });
     }
 
     // Listener de Clique no Floating Button
@@ -113,9 +131,7 @@ public class RecyclerActivity extends AppCompatActivity implements ClickRecycleV
             nextId_db = database.nextId();
 
             // Instancia a Lista de Forma Aleatoria
-            People peopleInstance = new People(nextId_db,
-                    names[randomPosition.nextInt(5)],
-                    ages[randomPosition.nextInt(7)]);
+            People peopleInstance = new People(nextId_db);
 
             // Insere a Pessoa no Banco de Dados
             database.insertPeople(peopleInstance);
@@ -128,6 +144,73 @@ public class RecyclerActivity extends AppCompatActivity implements ClickRecycleV
             adapter.notifyDataSetChanged();
 
         });
+    }
+
+    // Listener do ImageButton que abre/fecha o Fragment
+    private void listenerFragment() {
+        btn_fragment.setOnClickListener(v -> {
+            if (isOpenFragment) closeFragment(v);
+            else openFragment();
+        });
+    }
+
+    // Inicia o Fragment
+    private void openFragment() {
+
+        // Instancia a Classe do Fragment
+        userFragment = NewUserFragment.newInstance();
+
+        // Cria uma ação a ser executada
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Adiciona o Fragment e Altera a Variavel
+        fragmentTransaction.add(R.id.fragment_newUser, userFragment).addToBackStack(null).commit();
+
+        btn_fragment.setImageResource(R.drawable.ic_keyboard_arrow_up);
+        isOpenFragment = true;
+
+        // Deixa o FrameLayout do Fragment Visivel
+        fragment.setVisibility(View.VISIBLE);
+    }
+
+    // Fecha o Fragment se estiver um aberto
+    private void closeFragment(View v) {
+
+        // Deixa o FrameLayout do Fragment 'Escondido'
+        fragment.setVisibility(View.GONE);
+
+        // Recupera o Fragment Aberto pelo ID
+        userFragment = (NewUserFragment) fragmentManager.findFragmentById(R.id.fragment_newUser);
+
+        if(userFragment != null){
+            // Fragment Encontrado
+            fragmentTransaction = fragmentManager.beginTransaction();
+            //Remove o Fragment pelo ID
+            fragmentTransaction.remove(userFragment).commit();
+
+            // Altera o Icone e a Variavel do Fragment
+            btn_fragment.setImageResource(R.drawable.ic_keyboard_arrow_down);
+            isOpenFragment = false;
+
+            closeKeyboard(v);
+
+            // Atualiza a Lista de Pessoas
+            recoveryPeoples();
+        } else{
+            Toast.makeText(this, R.string.no_find_fragment, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Fecha o Teclado se estiver Aberto
+    public void closeKeyboard(View view){
+        InputMethodManager keyboardManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // Ao clicar no botão, caso o teclado esteja ativo ele é fechado
+        if (keyboardManager != null) {
+            keyboardManager.hideSoftInputFromWindow(view.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     // Clique no CardView
@@ -164,9 +247,7 @@ public class RecyclerActivity extends AppCompatActivity implements ClickRecycleV
         database.deletePeople(id);
         database.close();
 
-        hasDeleteItem();
-
-        adapter.notifyDataSetChanged();
+        recoveryPeoples();
     }
 
     // Clique nos 3 pontinhos
