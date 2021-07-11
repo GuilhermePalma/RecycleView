@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.DataBaseHelper;
-import com.example.recyclerview.model.People;
 
 
 public class WindowResults extends AppCompatActivity {
@@ -82,7 +81,7 @@ public class WindowResults extends AppCompatActivity {
     // Reinicia a Activity Recycler e Desativa a Animação de Abertura
     public void intentHome(){
         overridePendingTransition(0, 0);
-        startActivity(new Intent(this, RecyclerActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 

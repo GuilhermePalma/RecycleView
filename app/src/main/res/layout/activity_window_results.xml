@@ -19,8 +19,13 @@
 
     <TextView
         android:id="@+id/txt_id"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
         android:text="@string/label_idFormatted"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,9 +36,14 @@
 
     <TextView
         android:id="@+id/txt_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
         android:text="@string/label_nameFormatted"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,9 +52,14 @@
 
     <TextView
         android:id="@+id/txt_age"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
         android:text="@string/label_ageFormatted"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,9 +68,14 @@
 
     <TextView
         android:id="@+id/txt_item"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
         android:text="@string/label_itemFormatted"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
