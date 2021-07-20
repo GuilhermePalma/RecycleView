@@ -34,9 +34,12 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
     private ImageButton help;
     private ImageButton btn_fragment;
     private FloatingActionButton floatingActionButton;
+
     private FrameLayout fragment;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+    private RecyclerView recyclerView;
 
     private final DataBaseHelper database = new DataBaseHelper(this);
     private NewUserFragment userFragment;
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
     // Configura o RecyclerView
     public void setUpRecyclerView(){
         //Instancia o RecyclerView e Configura
-        RecyclerView recyclerView = findViewById(R.id.recycler_main);
+        recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Intancia o Adapter do Recycler View
@@ -166,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
 
         // Deixa o FrameLayout do Fragment Visivel
         fragment.setVisibility(View.VISIBLE);
+
+        recyclerView.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
+
     }
 
     // Fecha o Fragment se estiver um aberto
@@ -194,6 +201,9 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         } else{
             Toast.makeText(this, R.string.no_find_fragment, Toast.LENGTH_SHORT).show();
         }
+
+        recyclerView.setVisibility(View.VISIBLE);
+        floatingActionButton.setVisibility(View.VISIBLE);
     }
 
     // Fecha o Teclado se estiver Aberto

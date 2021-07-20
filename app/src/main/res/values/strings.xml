@@ -6,7 +6,7 @@
     <string name="title_recycler">Lista Dinâmica</string>
     <string name="title_result">Dados do Item</string>
     <string name="title_dialog">Ajuda</string>
-    <string name="message_dialog">Clique no Botão \"+\" ou \nClique no Icone \"V\"
+    <string name="message_dialog">Clique no Botão \"+\" ou \nClique no Icone \"v\"
         e Insira o Nome e Idade</string>
     <string name="no_find_fragment">Houve um Erro Inesperado…</string>
     <string name="description_help">Ver Ajuda</string>
@@ -30,5 +30,6 @@
     <string name="label_age">Idade</string>
     <string name="error_input">Campo %s não Preenchido</string>
     <string name="error_database">Houve um Problema no Nosso Banco de Dados…</string>
+    <string name="register_complete">Novo Usuario <b>Cadastrado com Sucesso</b> !</string>
 
 </resources>

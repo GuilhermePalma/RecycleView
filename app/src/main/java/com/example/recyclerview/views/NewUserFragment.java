@@ -1,6 +1,7 @@
 package com.example.recyclerview.views;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,9 +69,24 @@ public class NewUserFragment extends Fragment {
             } else if(age.equals("")){
                 input_age.setError(getString(R.string.error_input, "Idade"));
             } else{
-                People people = new People(nextId, name, Integer.parseInt(age));
-                database.insertPeople(people);
-                database.close();
+
+                // Intanciando a Classe e Inserindo no Banco de Dados
+                try {
+                    People people = new People(nextId, name, Integer.parseInt(age));
+                    database.insertPeople(people);
+
+                    Toast.makeText(view.getContext(), R.string.register_complete,
+                            Toast.LENGTH_SHORT).show();
+
+                    database.close();
+                } catch (Exception ex){
+                    Log.e("CONVERT INT", "Erro na conversão da String para " +
+                            "Integer. Erro:\n" + ex);
+                } finally {
+                    input_name.setText("");
+                    input_age.setText("");
+                }
+
             }
         });
 
