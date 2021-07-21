@@ -25,11 +25,11 @@
 
 
 <p align="center">
-  <img alt="Imagem da Tela Principal" title="Inicio" src="./printcreen/Initial.jpg" width="200px">
+  <img alt="Imagem da Tela Principal" title="Inicio" src="./printscreen/Inital.jpg" width="200px">
 	
-  <img alt="Imagem da Lista com Itens" title="Lista" src="./printcreen/List_With_Itens.jpg" width="200px">
+  <img alt="Imagem da Lista com Itens" title="Lista" src="./printscreen/List_With_Itens.jpg" width="200px">
 	
-  <img alt="Imagem do Cadastro de Novo Usuario" title="Usuarios" src="./printcreen/New_User.jpg" width="200px">
+  <img alt="Imagem do Cadastro de Novo Usuario" title="Usuarios" src="./printscreen/New_User.jpg" width="200px">
 	
   <img alt="Imagem dos Detalhes do Usuario Selecionado" title="Detalhes" src="./printscreen/ShowMore_Itens.jpg" width="200px">
 
@@ -72,10 +72,10 @@ Dinâmicas, Gerenciamento dos Cliques nela e Manipulação junto ao Banco de Dad
 - [x] Outros Recuros:
   - [X] Recycler View
   - [X] Gerenciamento de Cliques nos Itens e Botões
+  - [X] Manipulação de Dados entre Activities
   - [X] Banco de Dados Interno
   - [X] Fragment
   - [X] Interfaces
-  - [X] Manipulação de Dados entre Activities
 
 
 ## 🎨 Layout
