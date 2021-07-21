@@ -31,5 +31,7 @@
     <string name="error_input">Campo %s não Preenchido</string>
     <string name="error_database">Houve um Problema no Nosso Banco de Dados…</string>
     <string name="register_complete">Novo Usuario <b>Cadastrado com Sucesso</b> !</string>
+    <string name="error_convertInt">Somente são aceitas Idades entre <b>0 a 120</b> Anos !</string>
+    <string name="error_lenght">O Campo <b>%s</b> deve ter de <b>0 à %d %s</b></string>
 
 </resources>

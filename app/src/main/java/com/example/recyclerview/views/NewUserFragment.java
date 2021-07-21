@@ -45,48 +45,61 @@ public class NewUserFragment extends Fragment {
 
         // Clique no Botão "Cadastrar"
         register.setOnClickListener(v -> {
-            int nextId = 0;
-            String name = "", age = "";
+            int nextId, age;
+            String name;
 
             // Valida se o Banco de Dados é null
             if (database != null){
                 nextId = database.nextId();
 
-                // Recupera os Dados se não forem Nulos
-                name = Objects.requireNonNull(input_name.getText()).toString();
-                age = Objects.requireNonNull(input_age.getText()).toString();
+                // Valida se os Campos estão Preenchidos
+                if (input_name.getText().toString().equals("")){
+                    input_name.setError(getString(R.string.error_input, "Nome"));
+
+                } else if(input_age.getText().toString().equals("")) {
+                    input_age.setError(getString(R.string.error_input, "Idade"));
+
+                } else {
+
+                    // Obtem os valores Informados e Valida se a Idade está no Intervalo Int
+                    name = input_name.getText().toString();
+                    try {
+                        age = Integer.parseInt(input_age.getText().toString());
+
+                    } catch (Exception ex){
+                        Log.e("CONVERT INT", "Erro na conversão da String para " +
+                                "Integer. Error:\n" + ex);
+
+                        Toast.makeText(view.getContext(), R.string.error_convertInt,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // Valida a Quantidade de Caraceteres do Nome e Idade Minima e Maxima
+                    if (name.length() > 50){
+                        input_name.setError(getString(R.string.error_lenght, "Nome", 50,
+                                "Caracteres"));
+                    } else if (age < 0 || age > 120) {
+                        input_age.setError(getString(R.string.error_lenght, "Idade", 120,
+                                "Anos"));
+                    } else {
+                        // Intanciando a Classe e Insere no Banco de Dados
+                        People people = new People(nextId, name, age);
+                        database.insertPeople(people);
+                        database.close();
+
+                        Toast.makeText(view.getContext(), R.string.register_complete,
+                                Toast.LENGTH_SHORT).show();
+
+                        input_name.setText("");
+                        input_age.setText("");
+                    }
+                }
 
             } else{
                 // Caso o Banco de Dados seja Nulo
                 Toast.makeText(view.getContext(), R.string.error_database,
                         Toast.LENGTH_SHORT).show();
-            }
-
-            // TODO IMPLEMENTAR REGEX P/ VALIDAR OS CAMPOS
-            // Tratamento dos Campos
-            if (name.equals("")){
-                input_name.setError(getString(R.string.error_input, "Nome"));
-            } else if(age.equals("")){
-                input_age.setError(getString(R.string.error_input, "Idade"));
-            } else{
-
-                // Intanciando a Classe e Inserindo no Banco de Dados
-                try {
-                    People people = new People(nextId, name, Integer.parseInt(age));
-                    database.insertPeople(people);
-
-                    Toast.makeText(view.getContext(), R.string.register_complete,
-                            Toast.LENGTH_SHORT).show();
-
-                    database.close();
-                } catch (Exception ex){
-                    Log.e("CONVERT INT", "Erro na conversão da String para " +
-                            "Integer. Erro:\n" + ex);
-                } finally {
-                    input_name.setText("");
-                    input_age.setText("");
-                }
-
             }
         });
 
