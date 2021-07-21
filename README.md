@@ -1,28 +1,27 @@
 <h1 align="center" id="title">Recycler View</h1>
 
-
 <h3 align="center">
-    Desenvolvendo uma Aplicação com Listas Dinamicas - <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" tagert="_blank">Recycler View</a>
+   Aplicação usando Lista Dinâmica - <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" tagert="_blank">Recycler View</a>
 </h3>
+
+<br/>
 
 <p align="center" id="icons">
   <a href="#icons">
     <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/guilhermePalma/RecyclerView?color=2304D361">
   </a>
-	
   <a href="https://github.com/guilhermePalma/RecyclerView">
     <img alt="Repository size" src="https://img.shields.io/github/repo-size/guilhermePalma/RecyclerView">
   </a>
-	
   <a href="https://github.com/guilhermePalma/RecyclerView/commits/main">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/guilhermePalma/RecyclerView">
   </a>
-	
   <a href="LICENSE">
    <img alt="License" src="https://img.shields.io/github/license/guilhermePalma/RecyclerView">
   </a>
 </p>
 
+<br/>
 
 <p align="center">
   <img alt="Imagem da Tela Principal" title="Inicio" src="./printscreen/Inital.jpg" width="200px">
