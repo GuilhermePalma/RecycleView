@@ -2,7 +2,7 @@
 
 
 <h3 align="center">
-    Desenvolvendo uma Aplicação usando Listas Dinamicas - <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" tagert="_blank">Recycler View</a>
+    Desenvolvendo uma Aplicação com Listas Dinamicas - <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" tagert="_blank">Recycler View</a>
 </h3>
 
 <p align="center" id="icons">
@@ -23,27 +23,19 @@
   </a>
 </p>
 
-<h4 align="center">
-	🚧  Em Atualizações 🚀 🚧
-</h4>
 
-<!-- <p align="center">
-  <img alt="Imagem da Tela Principal" title="Inicio" src="./printscreen/LightMode/Index.jpeg" width="200px">
+<p align="center">
+  <img alt="Imagem da Tela Principal" title="Inicio" src="./printcreen/Initial.jpg" width="200px">
 	
-  <img alt="Imagem do Menu de Opções" title="Menu" src="./printscreen/LightMode/MenuOptions.jpeg" width="200px">
+  <img alt="Imagem da Lista com Itens" title="Lista" src="./printcreen/List_With_Itens.jpg" width="200px">
 	
-  <img alt="Imagem da Tela com Dados de Pesquisa" title="CustomView" src="./printscreen/LightMode/CustomView.jpeg" width="200px">
+  <img alt="Imagem do Cadastro de Novo Usuario" title="Usuarios" src="./printcreen/New_User.jpg" width="200px">
 	
-  <img alt="Imagem da Tela de Resultados" title="ResultadosAPI" src="./printscreen/LightMode/ResultApi.jpeg" width="200px">
-	
-  <img alt="Imagem da Tela Localização Atual" title="Localizacao" src="./printscreen/LightMode/Location.jpeg" width="200px">
-	
-  <img alt="Imagem do Feedback da Localização" title="FeedbackLocalizacao" src="./printscreen/LightMode/LocationWithFragment.jpeg" width="200px">
-	
-  <img alt="Imagem do Sensor de Proximidade Longe" title="SensorLonge" src="./printscreen/LightMode/SensorProximity.jpeg" width="200px">
-	
-  <img alt="Imagem do Sensor de Proximidade Perto" title="SensorPerto" src="./printscreen/LightMode/SensorProximityOff.jpeg" width="200px">
-</p> -->
+  <img alt="Imagem dos Detalhes do Usuario Selecionado" title="Detalhes" src="./printscreen/ShowMore_Itens.jpg" width="200px">
+
+  <img alt="Imagem do Botão Ajuda" title="Ajuda" src="./printscreen/Button_Help.jpg" width="200px">
+
+</p>
 
 
 Tabela de conteúdos
@@ -64,12 +56,9 @@ Tabela de conteúdos
 
 # 💻 Sobre o projeto
 
-**Recycler View** - Projeto desenvolvido para o estudo dos usos e aplicações do Recycler View na criação de Listas Dinamicas
+**Recycler View** - Projeto desenvolvido para o Estudo do Recycler View na criação de Listas
+Dinâmicas, Gerenciamento dos Cliques nela e Manipulação junto ao Banco de Dados
 
-<!-- TODO BUSCAR NA INTERNET UM API QUE GERE NOME E IDADES ALEATORIAS
-:books: Esse aplicativo busca dados em uma API de Maquiagem, Listando Imagem, Nome, Preço, Tipo, Marca e Descrição de cada Produto
-
-O Projeto utilizou a API Makeup. Para ver sua documentação, acesse [API Makeup](http://makeup-api.herokuapp.com/) -->
 
 
 ## 📰 Funcionalidades
@@ -81,23 +70,19 @@ O Projeto utilizou a API Makeup. Para ver sua documentação, acesse [API Makeup
   - [x] Posição na Lista
 
 - [x] Outros Recuros:
-  - [X] Banco de Dados Local
-  
-<!-- TODO COMENTARIO
-  - [x] Cargo
-  - [x] Hobby
- 
-- [x] Outros Recuros:
-  - [x] Tema Escuro -->
+  - [X] Recycler View
+  - [X] Gerenciamento de Cliques nos Itens e Botões
+  - [X] Banco de Dados Interno
+  - [X] Fragment
+  - [X] Interfaces
+  - [X] Manipulação de Dados entre Activities
 
 
 ## 🎨 Layout
 
 ### Mobile
 
-**Imagens** das Telas do APP: 🚧 Em Desenvolvimento e Atualizações 🚧
-<!-- - [Tema Normal](printscreen/LightMode) e [Tema Escuro](printscreen/DarkMode) -->
-
+**[Imagens](printscreen)** das Telas do APP
 
 
 ## 🚀 Como executar o projeto
@@ -113,7 +98,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 Este Projeto é divido em 4 Principais Partes:
 1. [Configurações das Telas](app/src/main/java/com/example/recyclerview/views)
 2. [Layout das Telas](app/src/main/res/layout)
-3. [Classes e Interfaces](app/src/main/java/com/example/recyclerview/model)
+3. [Classe e Interface](app/src/main/java/com/example/recyclerview/model)
 4. [Controladores](app/src/main/java/com/example/recyclerview/controller)
 
 
@@ -128,7 +113,6 @@ $ git clone https://github.com/GuilhermePalma/RecyclerView.git
 $ cd RecyclerView
 
 ```
-
 
 
 ## 🛠 Tecnologias
