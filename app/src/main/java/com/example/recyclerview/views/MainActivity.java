@@ -19,16 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.DataBaseHelper;
-import com.example.recyclerview.controller.RecyclerAdapter;
-import com.example.recyclerview.model.ClickRecycleView;
+import com.example.recyclerview.model.RecyclerLinearAdapter;
+import com.example.recyclerview.controller.ClickRecyclerView;
 import com.example.recyclerview.model.People;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ClickRecycleView {
+public class MainActivity extends AppCompatActivity implements ClickRecyclerView {
 
-    private RecyclerAdapter adapter;
+    private RecyclerLinearAdapter adapter;
     public ArrayList<People> peopleList = new ArrayList<>();
 
     private ImageButton help;
@@ -72,13 +72,13 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
     }
 
     // Configura o RecyclerView
-    public void setUpRecyclerView(){
+    public void setUpRecyclerView() {
         //Instancia o RecyclerView e Configura
         recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Intancia o Adapter do Recycler View
-        adapter = new RecyclerAdapter(this, peopleList, this);
+        adapter = new RecyclerLinearAdapter(this, peopleList, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         // Reinicia o RecyclerView
         peopleList.clear();
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             // Recupera os Dados enquanto tiver uma Proxima Posição
             do {
                 id = cursor.getInt(0);
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
                 age = cursor.getInt(2);
 
                 // Instancia a Classe
-                People peopleDataBase = new People(id,name,age);
+                People peopleDataBase = new People(id, name, age);
                 // Adiciona no Array do RecylcerView
                 peopleList.add(peopleDataBase);
 
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         // Recupera o Fragment Aberto pelo ID
         userFragment = (NewUserFragment) fragmentManager.findFragmentById(R.id.fragment_newUser);
 
-        if(userFragment != null){
+        if (userFragment != null) {
             // Fragment Encontrado
             fragmentTransaction = fragmentManager.beginTransaction();
             //Remove o Fragment pelo ID
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
 
             // Atualiza a Lista de Pessoas
             recoveryPeoples();
-        } else{
+        } else {
             Toast.makeText(this, R.string.no_find_fragment, Toast.LENGTH_SHORT).show();
         }
 
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
     }
 
     // Fecha o Teclado se estiver Aberto
-    public void closeKeyboard(View view){
+    public void closeKeyboard(View view) {
         InputMethodManager keyboardManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         int agePeople = peopleList.get(position).getAge() + 1;
         String namePeople = peopleList.get(position).getName();
 
-        People people_age = new People(idPeople,namePeople,agePeople);
+        People people_age = new People(idPeople, namePeople, agePeople);
 
         database.updatePeople(people_age);
         database.close();
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
 
     // Clique nos 3 pontinhos
     @Override
-    public void showMore(Object object, int position)  {
+    public void showMore(Object object, int position) {
         // Outra forma de recuperar a Classe do Item Clicado
         People people = (People) object;
         int id = people.getId();
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecycleView 
         int age = people.getAge();
 
         // Pega a Posição do Array e soma +1 p/ representar o item na Lista
-        position ++;
+        position++;
 
         Bundle dataPeople = new Bundle();
         dataPeople.putInt("id", id);

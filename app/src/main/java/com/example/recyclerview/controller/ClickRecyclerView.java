@@ -1,6 +1,6 @@
-package com.example.recyclerview.model;
+package com.example.recyclerview.controller;
 
-public interface ClickRecycleView {
+public interface ClickRecyclerView {
     void onCustomClick(int position);
 
     void deletePeople(int position);

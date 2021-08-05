@@ -1,4 +1,4 @@
-package com.example.recyclerview.controller;
+package com.example.recyclerview.model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,23 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recyclerview.R;
-import com.example.recyclerview.model.ClickRecycleView;
-import com.example.recyclerview.model.People;
+import com.example.recyclerview.controller.ClickRecyclerView;
 
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolder> {
+public class RecyclerLinearAdapter extends RecyclerView.Adapter<RecyclerLinearAdapter.RecycleViewHolder> {
 
     //Context e List usando a Classe "People" e Interface
     Context context;
     private final List<People> peopleList;
-    public ClickRecycleView clickRecycleView;
+    public ClickRecyclerView clickLinearRecycler;
 
     //Contrutor
-    public RecyclerAdapter(Context context, List<People> list, ClickRecycleView clickRecycleView) {
+    public RecyclerLinearAdapter(Context context, List<People> list, ClickRecyclerView clickLinearRecycler) {
         this.context = context;
         this.peopleList = list;
-        this.clickRecycleView = clickRecycleView;
+        this.clickLinearRecycler = clickLinearRecycler;
     }
 
     //Cria o ViewHolder. Instancia e Infla com o Layout a ser usado
@@ -38,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         View itemView;
 
         itemView = LayoutInflater.from(context).inflate
-                (R.layout.design_recycler_view, viewGroup, false);
+                (R.layout.layout_linear_recycler, viewGroup, false);
 
         return new RecycleViewHolder(itemView);
 
@@ -53,28 +52,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
             // Pega o Context, usando a View do Holder ---> P/ acessar as Strings
             String dataFormatted = holder.itemView.getContext().getString(R.string.label_data,
-                    String.format("%s", people.getName()),
-                    people.getAge());
+                    String.format("%s", people.getName()), people.getAge());
 
             holder.txtData.setText(dataFormatted);
             // Clique do Usuario no Item
             holder.itemView.setOnClickListener(v ->
-                    clickRecycleView.onCustomClick(position)
+                    clickLinearRecycler.onCustomClick(position)
             );
 
             // Clique no Button de Excluir
             holder.delete.setOnClickListener(v ->
-                    clickRecycleView.deletePeople(position)
+                    clickLinearRecycler.deletePeople(position)
             );
 
             // Clique no Button de Aumentar Idade
             holder.more_age.setOnClickListener(v ->
-                    clickRecycleView.addAge(position)
+                    clickLinearRecycler.addAge(position)
             );
 
             // Clique no Button de Ver Mais
-            holder.show_more.setOnClickListener( v ->
-                    clickRecycleView.showMore(peopleList.get(position), position)
+            holder.show_more.setOnClickListener(v ->
+                    clickLinearRecycler.showMore(peopleList.get(position), position)
             );
         }
 
@@ -83,7 +81,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     //Conta os Itens da Lista ---> Essencial p/ não criar uma Lista null
     @Override
     public int getItemCount() {
-        if (peopleList != null){
+        if (peopleList != null) {
             return peopleList.size();
         } else {
             return 0;
