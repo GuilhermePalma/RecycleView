@@ -10,6 +10,7 @@
         e Insira o Nome e Idade</string>
     <string name="no_find_fragment">Houve um Erro Inesperado…</string>
     <string name="description_help">Ver Ajuda</string>
+    <string name="description_lists">Tipo de Exibição da Lista</string>
     <string name="description_fragment">Visualizar ou Fechar o Cadastro de Usuarios</string>
 
     <!-- Strings Design Recycler View -->

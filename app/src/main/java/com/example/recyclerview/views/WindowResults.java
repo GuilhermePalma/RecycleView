@@ -22,8 +22,11 @@ public class WindowResults extends AppCompatActivity {
 
     private String string_name;
     private int int_age, int_position, int_id;
+    private boolean isActiveGrid;
 
     DataBaseHelper database = new DataBaseHelper(this);
+
+    private final String IS_GRID_LIST = "is_grid_list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +43,18 @@ public class WindowResults extends AppCompatActivity {
 
         // Obtem os valores passados pela Intent
         Intent intent = getIntent();
-        int_id = intent.getIntExtra("id",0);
-        string_name = intent.getStringExtra("name");
-        int_age = intent.getIntExtra("age",0);
-        int_position = intent.getIntExtra("position",0);
+
+        if (intent != null){
+            int_id = intent.getIntExtra("id",0);
+            string_name = intent.getStringExtra("name");
+            int_age = intent.getIntExtra("age",0);
+            int_position = intent.getIntExtra("position",0);
+            isActiveGrid = intent.getBooleanExtra(IS_GRID_LIST, false);
+        } else {
+            // Não obteve nenhum dado da Intent ---> Volta à Home
+            isActiveGrid = false;
+            intentHome();
+        }
 
         listenersButtons();
         formattedTexts();
@@ -80,8 +91,10 @@ public class WindowResults extends AppCompatActivity {
 
     // Reinicia a Activity Recycler e Desativa a Animação de Abertura
     public void intentHome(){
+        Intent home = new Intent(this, MainActivity.class);
+        home.putExtra(IS_GRID_LIST, isActiveGrid);
         overridePendingTransition(0, 0);
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(home);
         finish();
     }
 

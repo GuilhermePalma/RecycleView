@@ -3,6 +3,7 @@ package com.example.recyclerview.views;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -10,15 +11,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recyclerview.R;
 import com.example.recyclerview.controller.DataBaseHelper;
+import com.example.recyclerview.model.RecyclerGridAdapter;
 import com.example.recyclerview.model.RecyclerLinearAdapter;
 import com.example.recyclerview.controller.ClickRecyclerView;
 import com.example.recyclerview.model.People;
@@ -28,11 +32,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ClickRecyclerView {
 
-    private RecyclerLinearAdapter adapter;
+    private RecyclerLinearAdapter adapterLinear;
+    private RecyclerGridAdapter adapterGrid;
     public ArrayList<People> peopleList = new ArrayList<>();
 
-    private ImageButton help;
     private ImageButton btn_fragment;
+    private ImageButton help;
+    private ImageButton btn_lists;
     private FloatingActionButton floatingActionButton;
 
     private FrameLayout fragment;
@@ -43,23 +49,31 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
 
     private final DataBaseHelper database = new DataBaseHelper(this);
     private NewUserFragment userFragment;
-    private int nextId_db;
-    private boolean isOpenFragment = false;
+    private boolean isOpenFragment;
+    private boolean isGridList;
+
+    private final String IS_GRID_LIST = "is_grid_list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        floatingActionButton = findViewById(R.id.floatingButton);
-        help = findViewById(R.id.btn_help);
-        btn_fragment = findViewById(R.id.btn_fragment);
-        fragment = findViewById(R.id.fragment_newUser);
+        instanceItens();
 
-        fragmentManager = getSupportFragmentManager();
+        // Recupera o Estado do Tipo de Lista (Se Existir)
+        Intent intentReturn = getIntent();
+        if (intentReturn != null) {
+            isGridList = intentReturn.getBooleanExtra(IS_GRID_LIST, false);
+        }
 
-        // Configura o RecyclerView
-        setUpRecyclerView();
+        if (isGridList) {
+            btn_lists.setBackgroundResource(R.drawable.ic_list);
+            setUpRecyclerViewGrid();
+        } else {
+            btn_lists.setBackgroundResource(R.drawable.ic_view_comfy);
+            setUpRecyclerViewLinear();
+        }
 
         // Carrega as pessoas do Banco de Dados
         recoveryPeoples();
@@ -67,19 +81,64 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
         // Listeners dos Botões
         listenerFloatingButton();
         listenerFragment();
+
         help.setOnClickListener(v -> dialogHowUse());
 
+        btn_lists.setOnClickListener(v -> {
+            if (!isGridList) {
+                btn_lists.setBackgroundResource(R.drawable.ic_list);
+                setUpRecyclerViewGrid();
+                isGridList = true;
+            } else {
+                btn_lists.setBackgroundResource(R.drawable.ic_view_comfy);
+                setUpRecyclerViewLinear();
+                isGridList = false;
+            }
+        });
+    }
+
+    private void instanceItens() {
+        floatingActionButton = findViewById(R.id.floatingButton);
+        help = findViewById(R.id.btn_help);
+        btn_fragment = findViewById(R.id.btn_fragment);
+        btn_lists = findViewById(R.id.btn_list);
+        fragment = findViewById(R.id.fragment_newUser);
+
+        fragmentManager = getSupportFragmentManager();
+        isOpenFragment = false;
+
+        recyclerView = findViewById(R.id.recycler_main);
+        isGridList = false;
     }
 
     // Configura o RecyclerView
-    public void setUpRecyclerView() {
-        //Instancia o RecyclerView e Configura
-        recyclerView = findViewById(R.id.recycler_main);
+    public void setUpRecyclerViewLinear() {
+        // Define o tipo de Layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Intancia o Adapter do Recycler View
-        adapter = new RecyclerLinearAdapter(this, peopleList, this);
-        recyclerView.setAdapter(adapter);
+        adapterLinear = new RecyclerLinearAdapter(this, peopleList, this);
+        recyclerView.setAdapter(adapterLinear);
+    }
+
+    // Configura o RecyclerView
+    public void setUpRecyclerViewGrid() {
+        // Configura e define o Layout (Grid --> 2 Itens por Linha)
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        // Intancia o Adapter do Recycler View
+        adapterGrid = new RecyclerGridAdapter(getApplicationContext(), peopleList, this);
+        recyclerView.setAdapter(adapterGrid);
+
+        // Define a Quantidade de Itens por Linha
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return 1;
+            }
+        });
+
     }
 
     // Recupera as Pessoas já criadas e salvas no BD
@@ -106,7 +165,13 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
             } while (cursor.moveToNext());
         }
 
-        adapter.notifyDataSetChanged();
+        //Atualiza o Conteudo no Adapter
+        if (isGridList) {
+            adapterGrid.notifyDataSetChanged();
+        } else {
+            adapterLinear.notifyDataSetChanged();
+        }
+
         database.close();
     }
 
@@ -126,10 +191,8 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
     private void listenerFloatingButton() {
         floatingActionButton.setOnClickListener(v -> {
 
-            nextId_db = database.nextId();
-
             // Instancia a Lista de Forma Aleatoria
-            People peopleInstance = new People(nextId_db);
+            People peopleInstance = new People(database.nextId());
 
             // Insere a Pessoa no Banco de Dados
             database.insertPeople(peopleInstance);
@@ -139,8 +202,11 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
             peopleList.add(peopleInstance);
 
             //Atualiza o Conteudo no Adapter
-            adapter.notifyDataSetChanged();
-
+            if (isGridList) {
+                adapterGrid.notifyDataSetChanged();
+            } else {
+                adapterLinear.notifyDataSetChanged();
+            }
         });
     }
 
@@ -172,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
 
         recyclerView.setVisibility(View.GONE);
         floatingActionButton.setVisibility(View.GONE);
-
     }
 
     // Fecha o Fragment se estiver um aberto
@@ -218,7 +283,9 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
         }
     }
 
-    // Clique no CardView
+
+    // Interface do RecyclerView
+    // Clique no CardView ou nos 3 pontinhos (Lista)
     @Override
     public void onCustomClick(int position) {
         String name = peopleList.get(position).getName();
@@ -242,7 +309,13 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
         database.close();
 
         peopleList.set(position, people_age);
-        adapter.notifyDataSetChanged();
+
+        //Atualiza o Conteudo no Adapter
+        if (isGridList) {
+            adapterGrid.notifyDataSetChanged();
+        } else {
+            adapterLinear.notifyDataSetChanged();
+        }
     }
 
     // Clique no Botão Lixeira
@@ -272,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements ClickRecyclerView
         dataPeople.putString("name", name);
         dataPeople.putInt("age", age);
         dataPeople.putInt("position", position);
+        dataPeople.putBoolean(IS_GRID_LIST, isGridList);
 
         //Aqui é possivel enviar dados para outra activity
         Intent activityResult = new Intent(this, WindowResults.class);
